@@ -1,4 +1,4 @@
-package com.example.awesomepizza.model;
+package com.example.awesomepizza.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,19 +8,19 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
-@Table(name = "Pizzas")
+@Table(name = "Customers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pizza {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToMany(mappedBy = "pizzas")
-    private Set<Order> orders;
-
     private String name;
 
-    private double price;
+    private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "customer")
+    private Set<Order> orders;
 }

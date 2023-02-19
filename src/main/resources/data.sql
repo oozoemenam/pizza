@@ -1,0 +1,91 @@
+
+
+
+
+INSERT INTO
+    Pizzas
+(id, name, price)
+VALUES
+    (1, 'Margherita', 6.00);
+
+INSERT INTO
+    Pizzas
+(id, name, price)
+VALUES
+    (2, 'Kebab', 8.00);
+
+INSERT INTO
+    Customers
+(id, name, email)
+VALUES
+    (1, 'Sofia', 'sofia@gmail.com');
+
+
+INSERT INTO
+    Customers
+(id, name, email)
+VALUES
+    (2, 'David', 'david@gmail.com');
+
+
+INSERT INTO
+    Customers
+(id, name, email)
+VALUES
+    (3, 'Claudio', 'claudio@gmail.com');
+
+INSERT INTO
+    Orders
+(id, order_number, customer_id, total_price)
+VALUES
+    (1, 1, 1, 10.00);
+
+
+INSERT INTO
+    Orders
+(id, order_number, customer_id, total_price)
+VALUES
+    (2, 2, 2, 20.00);
+
+
+INSERT INTO
+    Orders
+(id, order_number, customer_id, total_price)
+VALUES
+    (3, 3, 2, 12.00);
+
+INSERT INTO
+    Orders
+(id, order_number, customer_id, total_price)
+VALUES
+    (4, 4, 3, 18.00);
+
+INSERT INTO
+    Orders_Pizzas
+(order_id, pizza_id)
+VALUES
+    (1, 1);
+
+INSERT INTO
+    Orders_Pizzas
+(order_id, pizza_id)
+VALUES
+    (2, 1);
+
+INSERT INTO
+    Orders_Pizzas
+(order_id, pizza_id)
+VALUES
+    (3, 1);
+
+INSERT INTO
+    Orders_Pizzas
+(order_id, pizza_id)
+VALUES
+    (4, 1);
+
+-- INSERT INTO
+--     Orders_Pizzas
+-- (order_id, pizza_id)
+-- VALUES
+--     (3, 3);

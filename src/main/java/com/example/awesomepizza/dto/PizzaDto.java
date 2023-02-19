@@ -1,16 +1,17 @@
 package com.example.awesomepizza.dto;
 
-import com.example.awesomepizza.model.Order;
-import jakarta.persistence.ManyToMany;
+import com.example.awesomepizza.enums.PizzaSizeEnum;
+import lombok.Data;
 
-import java.util.Set;
-
+@Data
 public class PizzaDto {
     private long id;
 
-    private Set<Order> orders;
-
     private String name;
 
+    private PizzaSizeEnum size;
+
     private double price;
+
+    // private Set<Order> orders;
 }

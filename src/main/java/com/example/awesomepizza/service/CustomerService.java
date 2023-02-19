@@ -1,7 +1,7 @@
-package com.example.awesomecustomer.service;
+package com.example.awesomepizza.service;
 
 import com.example.awesomepizza.exception.NotFoundException;
-import com.example.awesomepizza.model.Customer;
+import com.example.awesomepizza.domain.Customer;
 import com.example.awesomepizza.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

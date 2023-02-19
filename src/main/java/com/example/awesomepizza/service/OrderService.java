@@ -1,7 +1,7 @@
 package com.example.awesomepizza.service;
 
 import com.example.awesomepizza.exception.NotFoundException;
-import com.example.awesomepizza.model.Order;
+import com.example.awesomepizza.domain.Order;
 import com.example.awesomepizza.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class OrderService {
     }
 
     public List<Order> getOrdersPending() {
-        return orderRepository.findByCompleted(false);
+        return orderRepository.findByOrderByOrderNumberAsc();
     }
 
     public Order getOrderById(long id) {
