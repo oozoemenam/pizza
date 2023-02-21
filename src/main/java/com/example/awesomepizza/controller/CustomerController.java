@@ -38,7 +38,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> getCustomer(@PathVariable("id") long id) {
-        CustomerDto customerDto = convertToDto(customerService.getCustomerById(id));
+        CustomerDto customerDto = convertToDto(customerService.getCustomer(id));
         return new ResponseEntity<>(customerDto, HttpStatus.OK);
     }
 

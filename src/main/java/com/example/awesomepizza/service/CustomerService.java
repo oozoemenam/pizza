@@ -28,7 +28,7 @@ public class CustomerService {
         return customerRepository.findByNameContaining(name);
     }
 
-    public Customer getCustomerById(long id) {
+    public Customer getCustomer(long id) {
         return findOrThrow(id);
     }
 

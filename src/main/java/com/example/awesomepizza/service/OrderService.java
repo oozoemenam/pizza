@@ -28,7 +28,7 @@ public class OrderService {
         return orderRepository.findByOrderByOrderNumberAsc();
     }
 
-    public Order getOrderById(long id) {
+    public Order getOrder(long id) {
         return findOrThrow(id);
     }
 
