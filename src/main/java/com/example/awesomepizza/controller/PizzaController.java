@@ -38,7 +38,7 @@ public class PizzaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PizzaDto> getPizza(@PathVariable("id") long id) {
-        PizzaDto pizzaDto = convertToDto(pizzaService.getPizzaById(id));
+        PizzaDto pizzaDto = convertToDto(pizzaService.getPizza(id));
         return new ResponseEntity<>(pizzaDto, HttpStatus.OK);
     }
 

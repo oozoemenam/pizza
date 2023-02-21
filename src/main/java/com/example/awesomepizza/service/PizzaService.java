@@ -28,7 +28,7 @@ public class PizzaService {
         return pizzaRepository.findByNameContaining(name);
     }
     
-    public Pizza getPizzaById(long id) {
+    public Pizza getPizza(long id) {
         return findOrThrow(id);
     }
 
