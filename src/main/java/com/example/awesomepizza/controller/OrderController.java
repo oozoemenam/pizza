@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(allowedHeaders = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/orders")
