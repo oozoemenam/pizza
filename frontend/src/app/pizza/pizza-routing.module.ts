@@ -15,13 +15,13 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        canDeactivate: [FormGuard],
         component: FormComponent,
+        // canDeactivate: [FormGuard],
       },
       {
         path: ":id",
-        canDeactivate: [FormGuard],
         component: FormComponent,
+        // canDeactivate: [FormGuard],
       }
     ]
   },
