@@ -1,0 +1,9 @@
+
+<app-pizza-command-bar (action)="executeCommandBarAction($event)"></app-pizza-command-bar>
+
+<app-pizza-list 
+    [pizzas]="pizzas" 
+    [headers]="headers"
+    (pizza)="selectPizza($event)"
+>
+</app-pizza-list>

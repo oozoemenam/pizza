@@ -1,0 +1,10 @@
+<p>
+    <mat-toolbar color="primary">
+    <button></button>
+    <a data-cy="logo" class="light" href=".">Pizza CRUD</a>
+    <span class="spacer"></span>
+    <button *ngIf="loggedIn" (click)="submit('logout')" mat-icon-button>
+        <mat-icon>logout</mat-icon>
+    </button>
+    </mat-toolbar>
+</p>

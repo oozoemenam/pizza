@@ -1,0 +1,29 @@
+<mat-card class="form-card">
+    <h2>{{ selectedPizza ? "View Pizza" : "Create Pizza" }}</h2>
+    <form [formGroup]="form" class="pizza-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" placeholder="Ex. Margherita" data-cy="name">
+        </mat-form-field>
+        
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Size</mat-label>
+            <input matInput formControlName="size" placeholder="Ex. medium" data-cy="size">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Price</mat-label>
+            <input matInput formControlName="price" placeholder="Ex. 7.00" data-cy="price">
+        </mat-form-field>
+
+        <div class="button-group">
+            <button mat-raised-button color="primary" (click)="emitAction()" data-cy="action">
+                {{ actionButtonLabel }}
+            </button>
+            &nbsp;
+            <button mat-raised-button color="warn" (click)="clear()">
+                Clear
+            </button>
+        </div>
+    </form>
+</mat-card>
