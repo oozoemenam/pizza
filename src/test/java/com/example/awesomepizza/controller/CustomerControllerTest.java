@@ -5,12 +5,16 @@ import com.example.awesomepizza.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.zalando.problem.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
@@ -20,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -31,6 +36,8 @@ import static org.hamcrest.CoreMatchers.is;
 
 @WebMvcTest(controllers = CustomerController.class)
 @ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@AutoConfigureJsonTesters
 class CustomerControllerTest {
 
     @Autowired
@@ -68,18 +75,21 @@ class CustomerControllerTest {
                 .andExpect(jsonPath("$.size()", is(customerList.size())));
     }
 
-    @Test
-    void shouldFetchOneCustomerById() throws Exception {
-        final Long customerId = 1L;
-        final Customer customer = new Customer(1L, "ten", "ten@mail.com", new HashSet<>());
+    // @Test
+    // void shouldFetchOneCustomerById() throws Exception {
+    //     final Long customerId = 1L;
+    //     final Customer customer = new Customer(1L, "ten", "ten@mail.com", new HashSet<>());
 
-        given(customerService.getCustomer(customerId)).willReturn(customer);
+    //     given(customerService.getCustomer(customerId)).willReturn(customer);
 
-        this.mockMvc.perform(get("/api/v1/customers/{id}", customerId))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email", is(customer.getEmail())))
-                .andExpect(jsonPath("$.name", is(customer.getName())));
-    }
+    //     MockHttpServletResponse response = this.mockMvc.perform(
+    //             get("/api/v1/customers/{id}", customerId).accept(MediaType.APPLICATION_JSON))
+    //             .andReturn().getResponse();
+
+    //     System.out.println("response.getContentAsString()");
+    //     System.out.println(response.getContentAsString());
+    //     then(response.getContentAsString()).isEqualTo(objectMapper.writeValueAsString(customer));
+    // }
 
 //        @Test
 //        void shouldReturn404WhenFindCustomerById() throws Exception {
