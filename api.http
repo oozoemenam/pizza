@@ -7,3 +7,13 @@ Content-Type: application/json
     "size": "medium",
     "price": 7.00
 }
+
+###
+POST http://localhost:8080/api/v1/pizzas
+Content-Type: application/json
+
+{
+    "name": "Another Pizza",
+    "size": "medium",
+    "price": 8.00
+}
