@@ -1,6 +1,6 @@
 package com.example.awesomepizza.service;
 
-import com.example.awesomepizza.domain.Pizza;
+import com.example.awesomepizza.model.Pizza;
 import com.example.awesomepizza.enums.PizzaSizeEnum;
 import com.example.awesomepizza.exception.NotFoundException;
 import com.example.awesomepizza.repository.PizzaRepository;

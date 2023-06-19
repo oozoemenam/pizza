@@ -1,6 +1,6 @@
 package com.example.awesomepizza.controller;
 
-import com.example.awesomepizza.domain.Pizza;
+import com.example.awesomepizza.model.Pizza;
 import com.example.awesomepizza.dto.PizzaDto;
 import com.example.awesomepizza.service.PizzaService;
 import jakarta.validation.Valid;
@@ -14,21 +14,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(allowedHeaders = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/pizzas")
 public class PizzaController {
     private final PizzaService pizzaService;
     private final ModelMapper mapper;
-
-    private PizzaDto convertToDto(Pizza pizza) {
-        return mapper.map(pizza, PizzaDto.class);
-    }
-
-    private Pizza convertToEntity(@Valid PizzaDto pizzaDto) {
-        return mapper.map(pizzaDto, Pizza.class);
-    }
 
     @GetMapping
     public ResponseEntity<List<PizzaDto>> getPizzas() {
@@ -38,7 +29,7 @@ public class PizzaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PizzaDto> getPizza(@PathVariable("id") long id) {
+    public ResponseEntity<PizzaDto> getPizza(@PathVariable("id") Long id) {
         PizzaDto pizzaDto = convertToDto(pizzaService.getPizza(id));
         return new ResponseEntity<>(pizzaDto, HttpStatus.OK);
     }
@@ -50,7 +41,7 @@ public class PizzaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updatePizza(
+    public ResponseEntity<Void> updatePizza(
             @PathVariable("id") Long id,
             @Valid @RequestBody PizzaDto pizzaDto
     ) {
@@ -61,12 +52,20 @@ public class PizzaController {
         );
 
         pizzaService.updatePizza(id, convertToEntity(pizzaDto));
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletePizza(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deletePizza(@PathVariable("id") Long id) {
         pizzaService.deletePizza(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private PizzaDto convertToDto(Pizza pizza) {
+        return mapper.map(pizza, PizzaDto.class);
+    }
+
+    private Pizza convertToEntity(@Valid PizzaDto pizzaDto) {
+        return mapper.map(pizzaDto, Pizza.class);
     }
 }

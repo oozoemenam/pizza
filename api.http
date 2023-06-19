@@ -1,11 +1,11 @@
-
 POST http://localhost:8080/api/v1/pizzas
 Content-Type: application/json
 
 {
-    "name": "My Pizza",
-    "size": "medium",
-    "price": 7.00
+  "id": 1,
+  "name": "Margherita",
+  "size": "MEDIUM",
+  "price": 6.00
 }
 
 ###
@@ -13,7 +13,47 @@ POST http://localhost:8080/api/v1/pizzas
 Content-Type: application/json
 
 {
-    "name": "Another Pizza",
-    "size": "medium",
-    "price": 8.00
+  "id": 2,
+  "name": "Peperoni",
+  "size": "MEDIUM",
+  "price": 8.00
+}
+
+###
+POST http://localhost:8080/api/v1/customers
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Sofia",
+    "email": "sofia@gmail.com"
+}
+
+###
+POST http://localhost:8080/api/v1/orders
+Content-Type: application/json
+
+{
+  "id": 1,
+  "orderNumber": 1,
+  "orderStatus": "CREATED",
+  "customer": {
+    "id": 1,
+    "name": "Sofia",
+    "email": "sofia@gmail.com"
+  },
+  "pizzas": [
+    {
+      "id": 1,
+      "name": "Margherita",
+      "size": "MEDIUM",
+      "price": 6.00
+    },
+    {
+      "id": 2,
+      "name": "Peperoni",
+      "size": "MEDIUM",
+      "price": 8.00
+    }
+  ]
 }

@@ -1,17 +1,17 @@
 package com.example.awesomepizza.dto;
 
-import com.example.awesomepizza.enums.PizzaSizeEnum;
+import com.example.awesomepizza.enums.PizzaSize;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 public class PizzaDto {
-    private long id;
+    private Long id;
 
     private String name;
 
-    private PizzaSizeEnum size;
+    private PizzaSize size;
 
-    private double price;
-
-    // private Set<Order> orders;
+    private BigDecimal price;
 }

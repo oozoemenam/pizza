@@ -36,9 +36,9 @@ VALUES
 
 INSERT INTO
     Orders
-(id, order_number, customer_id, total_price)
+(id, order_number, customer_id)
 VALUES
-    (1, 1, 1, 10.00);
+    (1, 1, 1);
 
 
 INSERT INTO

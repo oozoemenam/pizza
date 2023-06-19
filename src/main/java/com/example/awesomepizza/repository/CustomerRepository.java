@@ -1,6 +1,6 @@
 package com.example.awesomepizza.repository;
 
-import com.example.awesomepizza.domain.Customer;
+import com.example.awesomepizza.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

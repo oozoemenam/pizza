@@ -1,8 +1,7 @@
 package com.example.awesomepizza.controller;
 
 import com.example.awesomepizza.dto.OrderDto;
-import com.example.awesomepizza.domain.Order;
-import com.example.awesomepizza.dto.OrderPendingDto;
+import com.example.awesomepizza.model.Order;
 import com.example.awesomepizza.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -15,21 +14,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(allowedHeaders = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/orders")
 public class OrderController {
     private final OrderService orderService;
     private final ModelMapper mapper;
-
-    private OrderDto convertToDto(Order order) {
-        return mapper.map(order, OrderDto.class);
-    }
-
-    private Order convertToEntity(@Valid OrderDto orderDto) {
-        return mapper.map(orderDto, Order.class);
-    }
 
     @GetMapping
     public ResponseEntity<List<OrderDto>> getOrders() {
@@ -39,14 +29,14 @@ public class OrderController {
     }
 
     @GetMapping("/pending")
-    public ResponseEntity<List<OrderPendingDto>> getOrdersPending() {
+    public ResponseEntity<List<OrderDto>> getOrdersPending() {
         List<Order> orders = orderService.getOrdersPending();
-        List<OrderPendingDto> orderPendingDtos = orders.stream().map((order) -> mapper.map(order, OrderPendingDto.class)).collect(Collectors.toList());
+        List<OrderDto> orderPendingDtos = orders.stream().map((order) -> mapper.map(order, OrderDto.class)).collect(Collectors.toList());
         return new ResponseEntity<>(orderPendingDtos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> getOrder(@PathVariable("id") long id) {
+    public ResponseEntity<OrderDto> getOrder(@PathVariable("id") Long id) {
         OrderDto orderDto = convertToDto(orderService.getOrder(id));
         return new ResponseEntity<>(orderDto, HttpStatus.OK);
     }
@@ -58,7 +48,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateOrder(
+    public ResponseEntity<Void> updateOrder(
             @PathVariable("id") Long id,
             @Valid @RequestBody OrderDto orderDto
     ) {
@@ -69,12 +59,20 @@ public class OrderController {
         );
 
         orderService.updateOrder(id, convertToEntity(orderDto));
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteOrder(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable("id") Long id) {
         orderService.deleteOrder(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private OrderDto convertToDto(Order order) {
+        return mapper.map(order, OrderDto.class);
+    }
+
+    private Order convertToEntity(@Valid OrderDto orderDto) {
+        return mapper.map(orderDto, Order.class);
     }
 }

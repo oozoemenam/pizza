@@ -1,7 +1,7 @@
 package com.example.awesomepizza.service;
 
 import com.example.awesomepizza.exception.NotFoundException;
-import com.example.awesomepizza.domain.Pizza;
+import com.example.awesomepizza.model.Pizza;
 import com.example.awesomepizza.repository.PizzaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 public class PizzaService {
     private final PizzaRepository pizzaRepository;
 
-    private Pizza findOrThrow(long id) {
+    private Pizza findOrThrow(Long id) {
         return pizzaRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(
                         "Pizza with id " + id + " was not found")
@@ -28,7 +28,7 @@ public class PizzaService {
         return pizzaRepository.findByNameContaining(name);
     }
     
-    public Pizza getPizza(long id) {
+    public Pizza getPizza(Long id) {
         return findOrThrow(id);
     }
 
@@ -36,12 +36,12 @@ public class PizzaService {
         return pizzaRepository.save(pizza);
     }
 
-    public Pizza updatePizza(long id, Pizza pizza) {
+    public Pizza updatePizza(Long id, Pizza pizza) {
         findOrThrow(id);
         return pizzaRepository.save(pizza);
     }
 
-    public void deletePizza(long id) {
+    public void deletePizza(Long id) {
         findOrThrow(id);
         pizzaRepository.deleteById(id);
     }

@@ -1,33 +1,31 @@
-package com.example.awesomepizza.domain;
+package com.example.awesomepizza.model;
 
-import com.example.awesomepizza.enums.OrderStatusEnum;
-import com.example.awesomepizza.enums.PizzaSizeEnum;
+import com.example.awesomepizza.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
-@Entity
-@Table(name = "Orders")
-@Data
+@Entity @Table(name = "Orders")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int orderNumber;
+    private Integer orderNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 12, columnDefinition = "varchar(12) default 'received'")
-    private OrderStatusEnum orderStatus;
+    @Column(length = 12, columnDefinition = "varchar(12) default 'CREATED'")
+    private OrderStatus orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @NonNull
     private Customer customer;
 
     @ManyToMany
@@ -36,7 +34,6 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "pizza_id")
     )
+    @NonNull
     private Set<Pizza> pizzas;
-
-    private double totalPrice;
 }

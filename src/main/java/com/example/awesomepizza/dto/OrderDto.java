@@ -1,22 +1,30 @@
 package com.example.awesomepizza.dto;
 
-import com.example.awesomepizza.enums.OrderStatusEnum;
+import com.example.awesomepizza.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class OrderDto {
-    private long id;
+    private Long id;
 
-    private int orderNumber;
+    private Integer orderNumber;
 
-    private OrderStatusEnum orderStatus;
+    private OrderStatus orderStatus;
 
     private CustomerDto customer;
 
     private List<PizzaDto> pizzas;
 
-    // private double totalPrice;
+    @JsonProperty("totalPrice")
+    private BigDecimal getTotalPrice() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (PizzaDto pizza : pizzas) {
+            sum = sum.add(pizza.getPrice());
+        }
+        return sum;
+    };
 }

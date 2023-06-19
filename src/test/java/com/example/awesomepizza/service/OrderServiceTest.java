@@ -1,9 +1,9 @@
 package com.example.awesomepizza.service;
 
-import com.example.awesomepizza.domain.Customer;
-import com.example.awesomepizza.domain.Order;
-import com.example.awesomepizza.domain.Pizza;
-import com.example.awesomepizza.enums.OrderStatusEnum;
+import com.example.awesomepizza.model.Customer;
+import com.example.awesomepizza.model.Order;
+import com.example.awesomepizza.model.Pizza;
+import com.example.awesomepizza.enums.OrderStatus;
 import com.example.awesomepizza.enums.PizzaSizeEnum;
 import com.example.awesomepizza.exception.NotFoundException;
 import com.example.awesomepizza.repository.OrderRepository;
@@ -13,7 +13,6 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class OrderServiceTest {
     @BeforeEach
     public void setup() {
         order.setOrderNumber(1);
-        order.setOrderStatus(OrderStatusEnum.received);
+        order.setOrderStatus(OrderStatus.received);
         order.setCustomer(customer);
         order.setPizzas(new HashSet<Pizza>() {{ add(pizza); }});
         // order.setPizzas(new HashSet<Pizza>(Arrays.asList(pizza)));
@@ -83,12 +82,12 @@ public class OrderServiceTest {
     @Test
     public void shouldUpdateOrder() {
         Order savedOrder = orderService.createOrder(order);
-        savedOrder.setOrderStatus(OrderStatusEnum.completed);
+        savedOrder.setOrderStatus(OrderStatus.completed);
         orderService.updateOrder(savedOrder.getId(), savedOrder);
 
         Order foundOrder = orderService.getOrder(savedOrder.getId());
 
-        assertThat(foundOrder.getOrderStatus()).isEqualTo(OrderStatusEnum.completed);
+        assertThat(foundOrder.getOrderStatus()).isEqualTo(OrderStatus.completed);
     }
 
     @Test

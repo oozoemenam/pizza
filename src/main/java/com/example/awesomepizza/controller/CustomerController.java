@@ -1,6 +1,6 @@
 package com.example.awesomepizza.controller;
 
-import com.example.awesomepizza.domain.Customer;
+import com.example.awesomepizza.model.Customer;
 import com.example.awesomepizza.service.CustomerService;
 import com.example.awesomepizza.dto.CustomerDto;
 import jakarta.validation.Valid;
@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(allowedHeaders = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/customers")
@@ -38,7 +37,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDto> getCustomer(@PathVariable("id") long id) {
+    public ResponseEntity<CustomerDto> getCustomer(@PathVariable("id") Long id) {
         CustomerDto customerDto = convertToDto(customerService.getCustomer(id));
         return new ResponseEntity<>(customerDto, HttpStatus.OK);
     }
@@ -50,7 +49,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateCustomer(
+    public ResponseEntity<Void> updateCustomer(
             @PathVariable("id") Long id,
             @Valid @RequestBody CustomerDto customerDto
     ) {
@@ -61,12 +60,12 @@ public class CustomerController {
         );
 
         customerService.updateCustomer(id, convertToEntity(customerDto));
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteCustomer(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable("id") Long id) {
         customerService.deleteCustomer(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
