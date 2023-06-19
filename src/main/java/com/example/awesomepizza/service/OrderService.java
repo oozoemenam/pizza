@@ -33,6 +33,10 @@ public class OrderService {
         return findOrThrow(id);
     }
 
+    public Order getOrderByOrderNumber(Integer orderNumber) {
+        return orderRepository.findByOrderNumber(orderNumber);
+    }
+
     public Order createOrder(Order order) {
         return orderRepository.save(order);
     }

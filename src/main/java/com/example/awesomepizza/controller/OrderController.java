@@ -41,6 +41,12 @@ public class OrderController {
         return new ResponseEntity<>(orderDto, HttpStatus.OK);
     }
 
+    @GetMapping("/{orderNumber}")
+    public ResponseEntity<OrderDto> getOrderByOrderNumber(@PathVariable("orderNumber") Integer orderNumber) {
+        OrderDto orderDto = convertToDto(orderService.getOrderByOrderNumber(orderNumber));
+        return new ResponseEntity<>(orderDto, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@RequestBody @Valid OrderDto orderDto) {
         Order order = orderService.createOrder(convertToEntity(orderDto));
