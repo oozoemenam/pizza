@@ -5,11 +5,17 @@
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" placeholder="Ex. Margherita" data-cy="name">
         </mat-form-field>
-        
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Size</mat-label>
-            <input matInput formControlName="size" placeholder="Ex. medium" data-cy="size">
-        </mat-form-field>
+
+<!--        <mat-form-field class="example-full-width" appearance="fill">-->
+<!--            <mat-label>Size</mat-label>-->
+<!--            <input matInput formControlName="size" placeholder="Ex. medium" data-cy="size">-->
+<!--        </mat-form-field>-->
+
+      <mat-button-toggle-group name="size" aria-label="Size" (change)="onSizeChange($event.value)">
+        <mat-button-toggle value="SMALL">Small</mat-button-toggle>
+        <mat-button-toggle value="MEDIUM">Medium</mat-button-toggle>
+        <mat-button-toggle value="LARGE">Large</mat-button-toggle>
+      </mat-button-toggle-group>
 
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Price</mat-label>

@@ -1,12 +1,10 @@
 package com.example.awesomepizza.service;
 
-import com.example.awesomepizza.model.Customer;
-import com.example.awesomepizza.enums.PizzaSizeEnum;
 import com.example.awesomepizza.exception.NotFoundException;
+import com.example.awesomepizza.model.Customer;
 import com.example.awesomepizza.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -83,16 +81,13 @@ public class CustomerServiceTest {
 
     @Test
     public void shouldDeleteCustomer() {
-        assertThrows(NotFoundException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                Customer savedCustomer = customerService.createCustomer(customer);
+        assertThrows(NotFoundException.class, () -> {
+            Customer savedCustomer = customerService.createCustomer(customer);
 
-                customerService.deleteCustomer(savedCustomer.getId());
-                Customer foundCustomer = customerService.getCustomer(savedCustomer.getId());
+            customerService.deleteCustomer(savedCustomer.getId());
+            Customer foundCustomer = customerService.getCustomer(savedCustomer.getId());
 
-                assertThat(foundCustomer).isNull();
-            }
+            assertThat(foundCustomer).isNull();
         });
     }
 }

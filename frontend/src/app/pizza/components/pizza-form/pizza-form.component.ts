@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pizza } from '../../models/pizza.interface';
+import {PizzaSize} from "../../enums/pizza-size.enum";
 
 @Component({
   selector: 'app-pizza-form',
@@ -39,10 +40,14 @@ export class PizzaFormComponent implements OnInit {
     }
   }
 
+  onSizeChange(size: PizzaSize) {
+    this.form.patchValue({size})
+  }
+
   emitAction() {
-    this.action.emit({ 
-      value: this.form.value, 
-      action: this.actionButtonLabel 
+    this.action.emit({
+      value: this.form.value,
+      action: this.actionButtonLabel
     });
   }
 

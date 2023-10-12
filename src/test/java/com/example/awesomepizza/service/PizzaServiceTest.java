@@ -1,7 +1,7 @@
 package com.example.awesomepizza.service;
 
 import com.example.awesomepizza.model.Pizza;
-import com.example.awesomepizza.enums.PizzaSizeEnum;
+import com.example.awesomepizza.enums.PizzaSize;
 import com.example.awesomepizza.exception.NotFoundException;
 import com.example.awesomepizza.repository.PizzaRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -21,14 +22,10 @@ public class PizzaServiceTest {
     private PizzaRepository pizzaRepository;
     private PizzaService pizzaService;
 
-    Pizza pizza = new Pizza();
+    Pizza pizza = new Pizza("Margherita", BigDecimal.valueOf(6.00));
 
     @BeforeEach
     public void setup() {
-        pizza.setName("Margherita");
-        pizza.setSize(PizzaSizeEnum.medium);
-        pizza.setPrice(6.00);
-
         pizzaService = new PizzaService(pizzaRepository);
     }
 
@@ -74,7 +71,7 @@ public class PizzaServiceTest {
     @Test
     public void shouldUpdatePizza() {
         Pizza savedPizza = pizzaService.createPizza(pizza);
-        savedPizza.setPrice(7.00);
+        savedPizza.setPrice(BigDecimal.valueOf(7.00));
         pizzaService.updatePizza(savedPizza.getId(), savedPizza);
 
         Pizza foundPizza = pizzaService.getPizza(savedPizza.getId());

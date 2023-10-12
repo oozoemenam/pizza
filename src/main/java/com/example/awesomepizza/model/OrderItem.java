@@ -1,13 +1,13 @@
 package com.example.awesomepizza.model;
 
-import com.example.awesomepizza.enums.PizzaSize;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -16,27 +16,29 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Pizza {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pizza_id")
     @NonNull
-    private String name;
-
-    @Enumerated(EnumType.STRING)
-    // @Column(length = 6, columnDefinition = "varchar(6) default 'MEDIUM'")
-    private PizzaSize size = PizzaSize.MEDIUM;
+    @ToString.Exclude
+    private Pizza pizza;
 
     @Positive
-    @Digits(integer = 5, fraction = 2)
-    @NonNull
-    private BigDecimal price;
+    private BigDecimal unitPrice; // pizza price multiplied by discount rate
 
-    @OneToMany(mappedBy = "pizza")
-    @ToString.Exclude
-    private List<OrderItem> orderItems = new ArrayList<>();
+    @Positive
+    @NotNull
+    private Integer quantity = 1;
+
+    @PrePersist
+    @PreUpdate
+    public void updateUnitPrice() {
+        unitPrice = pizza.getPrice();
+    }
 
     @Override
     public final boolean equals(Object o) {
@@ -45,8 +47,8 @@ public class Pizza {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Pizza pizza = (Pizza) o;
-        return getId() != null && Objects.equals(getId(), pizza.getId());
+        OrderItem orderItem = (OrderItem) o;
+        return getId() != null && Objects.equals(getId(), orderItem.getId());
     }
 
     @Override

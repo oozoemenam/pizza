@@ -1,19 +1,18 @@
 package com.example.awesomepizza.service;
 
+import com.example.awesomepizza.enums.OrderStatus;
+import com.example.awesomepizza.exception.NotFoundException;
 import com.example.awesomepizza.model.Customer;
 import com.example.awesomepizza.model.Order;
+import com.example.awesomepizza.model.OrderItem;
 import com.example.awesomepizza.model.Pizza;
-import com.example.awesomepizza.enums.OrderStatus;
-import com.example.awesomepizza.enums.PizzaSizeEnum;
-import com.example.awesomepizza.exception.NotFoundException;
 import com.example.awesomepizza.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.HashSet;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,16 +24,17 @@ public class OrderServiceTest {
     private OrderRepository orderRepository;
     private OrderService orderService;
 
-    Customer customer = new Customer(1, "Sofia", "sofia@email.com", new HashSet<>());
-    Pizza pizza = new Pizza(1, "Margherita", PizzaSizeEnum.medium, 6.00, new HashSet<>());
-    Order order = new Order();
+    Customer customer = new Customer("Sofia", "sofia@email.com");
+    Pizza pizza = new Pizza("Margherita", BigDecimal.valueOf(6.00));
+    Order order = new Order(customer, List.of(new OrderItem(pizza)));
 
     @BeforeEach
     public void setup() {
-        order.setOrderNumber(1);
-        order.setOrderStatus(OrderStatus.received);
+        // order.setOrderNumber(1);
+        // order.setOrderStatus(OrderStatus.received);
         order.setCustomer(customer);
-        order.setPizzas(new HashSet<Pizza>() {{ add(pizza); }});
+        order.setOrderItems(List.of(new OrderItem(pizza)));
+        // order.setPizzas(new HashSet<Pizza>() {{ add(pizza); }});
         // order.setPizzas(new HashSet<Pizza>(Arrays.asList(pizza)));
 
         orderService = new OrderService(orderRepository);
@@ -82,26 +82,23 @@ public class OrderServiceTest {
     @Test
     public void shouldUpdateOrder() {
         Order savedOrder = orderService.createOrder(order);
-        savedOrder.setOrderStatus(OrderStatus.completed);
+        savedOrder.setOrderStatus(OrderStatus.DELIVERED);
         orderService.updateOrder(savedOrder.getId(), savedOrder);
 
         Order foundOrder = orderService.getOrder(savedOrder.getId());
 
-        assertThat(foundOrder.getOrderStatus()).isEqualTo(OrderStatus.completed);
+        assertThat(foundOrder.getOrderStatus()).isEqualTo(OrderStatus.DELIVERED);
     }
 
     @Test
     public void shouldDeleteOrder() {
-        assertThrows(NotFoundException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                Order savedOrder = orderService.createOrder(order);
+        assertThrows(NotFoundException.class, () -> {
+            Order savedOrder = orderService.createOrder(order);
 
-                orderService.deleteOrder(savedOrder.getId());
-                Order foundOrder = orderService.getOrder(savedOrder.getId());
+            orderService.deleteOrder(savedOrder.getId());
+            Order foundOrder = orderService.getOrder(savedOrder.getId());
 
-                assertThat(foundOrder).isNull();
-            }
+            assertThat(foundOrder).isNull();
         });
     }
 }

@@ -53,9 +53,9 @@ class CustomerControllerTest {
     @BeforeEach
     void setUp() {
         this.customerList = new ArrayList<>();
-        this.customerList.add(new Customer(1L, "customer1", "customer1@gmail.com", new HashSet<>()));
-        this.customerList.add(new Customer(2L, "customer2", "customer2@gmail.com", new HashSet<>()));
-        this.customerList.add(new Customer(3L, "customer3", "customer3@gmail.com", new HashSet<>()));
+        this.customerList.add(new Customer("customer1", "customer1@gmail.com"));
+        this.customerList.add(new Customer("customer2", "customer2@gmail.com"));
+        this.customerList.add(new Customer("customer3", "customer3@gmail.com"));
 
         objectMapper.registerModule(new ProblemModule());
         objectMapper.registerModule(new ConstraintViolationProblemModule());
